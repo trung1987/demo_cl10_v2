@@ -1,0 +1,4 @@
+*.class
+libs/
+test-output/
+report/
