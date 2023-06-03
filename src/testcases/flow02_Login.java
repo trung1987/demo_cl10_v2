@@ -3,14 +3,23 @@ package testcases;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import basedObjects.Obj_Login;
 import commons.BasedPage;
 import commons.ExcelUtil;
 import commons.commonData;
 
 public class flow02_Login extends BasedPage{
-
+	
+	Obj_Login login_screen ;
+	
+	@BeforeMethod
+	public void initdata() {
+		login_screen = new Obj_Login(edge_driver) ;
+	}
+	
 	@Test
 	public void TC01_login_success() {
 		test = extent.createTest("TC01_login_success"); // tao moi 1 test case voi name
@@ -18,25 +27,17 @@ public class flow02_Login extends BasedPage{
 		test.info("Go to url" +url_login);
 		edge_driver.get(url_login);
 		
-		String xpathUserName = "//input[contains(@name,'uid')]";
-		WebElement inputUserName = edge_driver.findElement(By.xpath(xpathUserName));
-		
-		String xpathPassWord = "//input[contains(@name,'password')]";
-		WebElement inputPassWord = edge_driver.findElement(By.xpath(xpathPassWord));
 		ExcelUtil excel = new ExcelUtil();
 		String username = excel.ReadDataAtCell("./resources/data.xlsx", "login", 
 				commonData.login_row_start, commonData.login_col_user);
 		String pass = excel.ReadDataAtCell("./resources/data.xlsx", "login", 
 				commonData.login_row_start, commonData.login_col_pwd);
 		
-		inputUserName.sendKeys(username);
-		inputPassWord.sendKeys(pass);
+		login_screen.intput_username(test, username);
+		login_screen.intput_pwd(test, pass);
 		
-		
-		String xpathLogin = "//input[contains(@name,'btnLogin')]";
-		WebElement btnLogin = edge_driver.findElement(By.xpath(xpathLogin));
-		btnLogin.click();
-		
+	
+		login_screen.click_login(test);
 		
 		String xpathConfirmId = "//td[contains(text(),'Manger Id')]";
 		WebElement confirmUserName = edge_driver.findElement(By.xpath(xpathConfirmId));

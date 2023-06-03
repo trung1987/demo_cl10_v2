@@ -6,10 +6,14 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 public class commonFuncs {
 
@@ -69,5 +73,42 @@ public class commonFuncs {
 	    String formattedDate = myDateObj.format(myFormatObj);
 	   // System.out.println("After formatting: " + formattedDate);
 	    return formattedDate;
+	}
+	
+	public void open_url(WebDriver driver, ExtentTest test, String url) {
+		test.info("Go to url" +url);
+		System.out.println("Go to url" +url);
+		driver.get(url);
+	}
+	
+	public void maximize_brower(WebDriver driver, ExtentTest test) {
+		test.info("maximize browser");
+		System.out.println("maximize browser");
+		driver.manage().window().maximize();
+	}
+	
+	public String get_current_url(WebDriver driver, ExtentTest test) {
+		String url = driver.getCurrentUrl();
+		test.info("get current url: " + url);
+		System.out.println("get current url: " + url);
+		return url;
+	}
+	
+	public void element_click(WebDriver driver, ExtentTest test, String xpath) {
+		WebElement btn_ele = driver.findElement(By.xpath(xpath));
+		
+		test.info("Click button - xpath " + xpath);
+		test.info(MediaEntityBuilder.createScreenCaptureFromPath(screenshot_ele(btn_ele)).build()); //add ele screenshot
+		System.out.println("Click button - xpath " + xpath);
+		btn_ele.click();
+	}
+	
+	public void element_sendkey(WebDriver driver, ExtentTest test, String xpath,String data) {
+		WebElement btn_ele = driver.findElement(By.xpath(xpath));
+		
+		test.info("Send data '" + data +"' into - xpath " + xpath);
+		test.info(MediaEntityBuilder.createScreenCaptureFromPath(screenshot_ele(btn_ele)).build()); //add ele screenshot
+		System.out.println("Send data '" + data +"' into - xpath " + xpath);
+		btn_ele.sendKeys(data);
 	}
 }

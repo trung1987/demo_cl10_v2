@@ -4,14 +4,22 @@ import java.util.Random;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.MediaEntityBuilder;
 
+import basedObjects.Obj_Login;
 import commons.BasedPage;
 import commons.commonData;
 
 public class flow01_registerAcc extends BasedPage {
+	Obj_Login lgoObj;
+	
+	@BeforeMethod
+	public void initData() {
+		lgoObj = new Obj_Login(edge_driver);
+	}
 	
 	@Test
 	public void TC01_register_success() {
@@ -21,32 +29,32 @@ public class flow01_registerAcc extends BasedPage {
 		//ExtentTest : se chiu trach nhiem ghi log: info, pass, fail, step...
 		
 		String url = "https://demo.guru99.com/v4/";
-		test.info("Go to url" +url);
-		edge_driver.get(url);
-
+		
+		funcs.open_url(edge_driver, test, url);
+		
 		// Mazimize current window
-		test.info("maximize browser");
-		edge_driver.manage().window().maximize();
+		funcs.maximize_brower(edge_driver, test);
 
 		// Click button here
-		String xpathHere = "//a[@href='http://demo.guru99.com/']";
-		WebElement clickBtnHere = edge_driver.findElement(By.xpath(xpathHere));
-		test.info("Click button here");
-		test.info(MediaEntityBuilder.createScreenCaptureFromPath(funcs.screenshot_ele(clickBtnHere)).build()); //add ele screenshot
-		clickBtnHere.click();
-
+		
+		//funcs.element_click(edge_driver, test, xpathHere);
+		lgoObj.click_here(test);
+		
 		String url_ads = "https://demo.guru99.com/v4/#google_vignette";
 		
-		String url_current = edge_driver.getCurrentUrl();
-		test.info("get current url " + url_current);
+		String url_current = funcs.get_current_url(edge_driver, test);
+		
 		if (url_current.equals(url_ads)) {
 			String iframeLink = "//iframe[contains(@id,'google_ads_iframe')]";
 			WebElement iframeAdd = edge_driver.findElement(By.xpath(iframeLink));
 
 			edge_driver.switchTo().frame(iframeAdd);
+			
 			String clickBtnAdd = "//div[contains(@role, 'button')]";
-			WebElement clickBtnClose = edge_driver.findElement(By.xpath(clickBtnAdd));
-			clickBtnClose.click();
+//			WebElement clickBtnClose = edge_driver.findElement(By.xpath(clickBtnAdd));
+//			clickBtnClose.click();
+			funcs.element_click(edge_driver, test, clickBtnAdd);
+			
 			edge_driver.switchTo().defaultContent();
 		}
 
@@ -55,7 +63,7 @@ public class flow01_registerAcc extends BasedPage {
 		WebElement inputEmail = edge_driver.findElement(By.xpath(xpathEmail));
 
 		Random randomEmail = new Random();
-		String ramdomInputTextEmail = "hien" + randomEmail.nextInt(1000) + "@gmail.com";
+		String ramdomInputTextEmail = "hien" + funcs.getTimeStemp() + "@gmail.com";
 		test.info(" input email " + ramdomInputTextEmail);
 		inputEmail.sendKeys(ramdomInputTextEmail);
 
