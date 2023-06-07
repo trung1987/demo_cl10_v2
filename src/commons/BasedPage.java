@@ -9,6 +9,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -67,8 +68,14 @@ public class BasedPage {
 	}
 	
 	@AfterMethod
-	public void saveExtentRp() {
-		test.info(MediaEntityBuilder.createScreenCaptureFromPath(funcs.screenshot_page(edge_driver)).build());
+	public void saveExtentRp(ITestResult result) {
+		if(result.getStatus() ==1) {
+			test.pass(MediaEntityBuilder.createScreenCaptureFromPath(funcs.screenshot_page(edge_driver)).build());
+		} else if(result.getStatus() ==2) {
+			test.fail(MediaEntityBuilder.createScreenCaptureFromPath(funcs.screenshot_page(edge_driver)).build());
+		} else {
+			test.info(MediaEntityBuilder.createScreenCaptureFromPath(funcs.screenshot_page(edge_driver)).build());
+		}
 		extent.flush();
 	}
 	

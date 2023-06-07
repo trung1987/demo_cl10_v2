@@ -5,8 +5,8 @@
   <parameter name="browser" value="chrome"/>
     <classes>
 <!--  	   <class name="testcases.flow01_registerAcc" /> -->
-       <class name="testcases.flow01_registerAcc" />  
-       <class name="testcases.flow02_Login" />
+       <class name="testcases.flow02_Login" />  
+<!--        <class name="testcases.flow02_Login" /> -->
        
     </classes>
   </test>

@@ -33,8 +33,9 @@ public class flow02_Login extends BasedPage{
 		String pass = excel.ReadDataAtCell("./resources/data.xlsx", "login", 
 				commonData.login_row_start, commonData.login_col_pwd);
 		
-		login_screen.intput_username(test, username);
-		login_screen.intput_pwd(test, pass);
+		login_screen.intput_username(test, username); //pass
+	
+		login_screen.intput_pwd(test, pass); //pw  : fail
 		
 	
 		login_screen.click_login(test);
@@ -54,7 +55,7 @@ public class flow02_Login extends BasedPage{
 	
 	@Test
 	public void TC02_login_success() {
-		test = extent.createTest("TC01_login_success");
+		test = extent.createTest("TC02_login_success");
 		test.info("demo step 2 - TC02_login_success");
 	}
 }

@@ -11,7 +11,7 @@ public class Obj_Login {
 	// xpath
 	String xpathHere = "//a[@href='http://demo.guru99.com/']";
 	String xpathUserName = "//input[contains(@name,'uid')]";
-	String xpathPassWord = "//input[contains(@name,'password')]";
+	String xpathPassWord = "//input[contains(@name,'password_')]";
 	String xpathLogin = "//input[contains(@name,'btnLogin')]";
 	String xpathReset = "//input[contains(@name,'btnReset')]";
 	commonFuncs func = new commonFuncs(); //new 1 constructor
